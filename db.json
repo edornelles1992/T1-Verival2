@@ -1,0 +1,188 @@
+{
+  "colaboradores":[
+    {
+      "id": "1",
+      "nome": "Denis Manoel",
+      "matricula": "164930254",
+      "email": "denis@gmail.com"
+    },
+    {
+      "id": "2",
+      "nome": "Paulo Silva",
+      "matricula": "182949054",
+      "email": "paulo@gmail.com"
+    },
+    {
+      "id": "3",
+      "nome": "João Flores",
+      "matricula": "163484356",
+      "email": "joao@gmail.com"
+    },
+    {
+      "id": "4",
+      "nome": "Maria Almeida",
+      "matricula": "153463466",
+      "email": "maria@gmail.com"
+    },
+    {
+      "id": "5",
+      "nome": "Manoel de Paula",
+      "matricula": "164385438",
+      "email": "manoel@gmail.com"
+    }
+  ],
+  "recursos":{
+        "custoEspacoPadrao": 100,
+        "custoAdicionalAssento": 5,
+        "itens":[
+          {
+            "id": "1",
+            "nome": "Sala 201",
+            "tipo": "espaço",
+            "tamanho": 25,
+            "assentos": 40,
+            "custo": 200
+          },
+          {
+            "id": "2",
+            "nome": "Sala 202",
+            "tipo": "espaço",
+            "tamanho": 30,
+            "assentos": 45,
+            "custo": 250
+          },
+          {
+            "id": "3",
+            "nome": "Auditório 32",
+            "tipo": "espaço",
+            "tamanho": 90,
+            "assentos": 120,
+            "custo": 800
+          },
+          {
+            "id": "4",
+            "nome": "notebook 1",
+            "tipo": "movel",
+            "custo": 10
+          },
+          {
+            "id": "5",
+            "nome": "notebook 2",
+            "tipo": "movel",
+            "custo": 10
+          },
+          {
+            "id": "6",
+            "nome": "notebook 3",
+            "tipo": "movel",
+            "custo": 20
+          },
+          {
+            "id": "7",
+            "nome": "smartphone 1",
+            "tipo": "movel",
+            "custo": 8
+          },
+          {
+            "id": "8",
+            "nome": "tablet 1",
+            "tipo": "movel",
+            "custo": 10
+          },
+          {
+            "id": "9",
+            "nome": "mesa 1",
+            "tipo": "mobilia",
+            "custo": 12
+          },
+          {
+            "id": "10",
+            "nome": "mesa 2",
+            "tipo": "mobilia",
+            "custo": 8
+          },
+          {
+            "id": "11",
+            "nome": "cadeira 1",
+            "tipo": "mobilia",
+            "custo": 5
+          },
+          {
+            "id": "12",
+            "nome": "cadeira 2",
+            "tipo": "mobilia",
+            "custo": 5
+          },
+          {
+            "id": "13",
+            "nome": "cadeira 3",
+            "tipo": "mobilia",
+            "custo": 5
+          },
+          {
+            "id": "14",
+            "nome": "cadeira 4",
+            "tipo": "mobilia",
+            "custo": 5
+          },
+          {
+            "id": "15",
+            "nome": "cadeira 5",
+            "tipo": "mobilia",
+            "custo": 5
+          },
+          {
+            "id": "16",
+            "nome": "cadeira 6",
+            "tipo": "mobilia",
+            "custo": 5
+          }
+        ]
+  },
+  "reservas": [
+    {
+      "id": "1",
+      "dataInicio": "2020-06-03T16:00:00.000Z",
+      "dataFim": "2020-06-03T17:00:00.000Z",
+      "nome": "Denis Manoel",
+      "idUsuario": "1",
+      "custo": 200.00,
+      "recurso": {
+        "id": "1",
+        "nome": "Sala 201",
+        "tipo": "espaço",
+        "tamanho": 25,
+        "assentos": 40,
+        "custo": 200.00
+      }
+    },
+    {
+      "id": "2",
+      "dataInicio": "2020-06-03T13:00:00.000Z",
+      "dataFim": "2020-06-03T14:00:00.000Z",
+      "nome": "Denis Manoel",
+      "idUsuario": "2",
+      "custo": 10.00,
+      "recurso": {
+        "id": "4",
+        "nome": "notebook 1",
+        "tipo": "movel",
+        "custo": 10.00
+      }
+    },
+    {
+      "id": "3",
+      "dataInicio": "2020-06-04T15:00:00.000Z",
+      "dataFim": "2020-06-04T15:40:00.000Z",
+      "nome": "Denis Manoel",
+      "idUsuario": "3",
+      "custo": 10.00,
+      "recurso": {
+          "id": "8",
+          "nome": "tablet 1",
+          "tipo": "movel",
+          "custo": 10.00
+      }
+    }
+  ]
+}
