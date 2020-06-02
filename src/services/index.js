@@ -4,11 +4,9 @@ import axios from "axios";
 export const getColaboradores = () => {
   return axios.get('http://localhost:3000/colaboradores')
   .then(function (response) {
-    // handle success
     return response.data
   })
   .catch(function (error) {
-    // handle error
     console.log(error);
   })
 };
@@ -16,11 +14,9 @@ export const getColaboradores = () => {
 export const getRecursos = () => {
   return axios.get('http://localhost:3000/recursos')
   .then(function (response) {
-    // handle success
     return response.data
   })
   .catch(function (error) {
-    // handle error
     console.log(error);
   })
 };
@@ -28,11 +24,9 @@ export const getRecursos = () => {
 export const getReservas = () => {
   return axios.get('http://localhost:3000/reservas')
   .then(function (response) {
-    // handle success
     return response.data
   })
   .catch(function (error) {
-    // handle error
     console.log(error);
   })
 };

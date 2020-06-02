@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -13,8 +13,9 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import {getReservas} from '../services/index'
+import { getReservas } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
+import { TextField } from '@material-ui/core';
 
 export default class Reservas extends Component {
 
@@ -37,42 +38,69 @@ export default class Reservas extends Component {
   };
 
   render() {
-    console.log(this.state.reservas)
     return (
       <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '10px'}}>
-        <Grid item xs={12}>
+        <Grid item xs>
           <Typography variant="h4">
             Reservas
           </Typography>
         </Grid>
-        <Grid item style={{width: "50%"}}>
+        <Grid item xs>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.resetValues}
+            style={{ marginBottom: "20px" }}
+          >
+            Inserir Reserva
+          </Button>
+        </Grid>
+        <Grid item xs>
+          <TextField
+            id="date"
+            label="Data Início"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            style={{marginRight: "20px"}}
+          />
+          <TextField
+            id="date"
+            label="Data Fim"
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </Grid>
+        <Grid item xs style={{width: '800px'}}>
           {this.state.reservas.map((reserva, index) => (
-          <ExpansionPanel TransitionProps={{unmountOnExit: true}} onChange={() => this.setState({selectedTeamIndex: index})}>
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon/>}
-              aria-controls={"panel" + index + "c-content"}
-              id={"panel" + index + "c-header"}
-            >
-              <Typography variant="h6">{"Reserva nº " + reserva.id}</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-            <Grid item xs={12}>
-            <Typography>{"Responsável: " + reserva.nome}</Typography>
-            <Typography>{"Data Inicio: " + new Date(reserva.dataInicio).toLocaleDateString() + " " + new Date(reserva.dataInicio).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
-            <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString() + " " + new Date(reserva.dataFim).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
-            <Typography>{"Custo: R$ " + toMoneyConversion(reserva.custo)}</Typography>
-            <Typography>{"Recurso: " + reserva.recurso.nome}</Typography>
-            <Typography>{"Tipo: " + reserva.recurso.tipo}</Typography>
-            </Grid>
-            </ExpansionPanelDetails>
-            <Divider/>
-            <ExpansionPanelActions>
-              <Button size="small" onClick={this.resetValues}>Cancelar</Button>
-            </ExpansionPanelActions>
-          </ExpansionPanel>
-          )
-          )
-          }
+            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls={"panel" + index + "c-content"}
+                id={"panel" + index + "c-header"}
+              >
+                <Typography variant="h6">{"Reserva nº " + reserva.id}</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Grid item xs={12}>
+                  <Typography>{"Responsável: " + reserva.nome}</Typography>
+                  <Typography>{"Data Inicio: " + new Date(reserva.dataInicio).toLocaleDateString() + " " + new Date(reserva.dataInicio).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
+                  <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString() + " " + new Date(reserva.dataFim).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
+                  <Typography>{"Custo: R$ " + toMoneyConversion(reserva.custo)}</Typography>
+                  <Typography>{"Recurso: " + reserva.recurso.nome}</Typography>
+                  <Typography>{"Tipo: " + reserva.recurso.tipo}</Typography>
+                </Grid>
+              </ExpansionPanelDetails>
+              <Divider />
+              <ExpansionPanelActions>
+                <Button size="small" onClick={this.resetValues}>Excluir</Button>
+                <Button size="small" onClick={this.resetValues}>Cancelar</Button>
+              </ExpansionPanelActions>
+            </ExpansionPanel>
+          ))}
         </Grid>
       </Grid>
     );
