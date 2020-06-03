@@ -44,7 +44,7 @@ export default class Recursos extends Component {
             <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '10px'}}>
                 <Grid item xs={12} >
                     <Typography variant="h4" >
-                        {this.props.text}
+                        Recursos
                     </Typography>
                 </Grid>
 
