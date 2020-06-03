@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { createBrowserHistory } from "history";
 import Colaboradores from '../views/Colaboradores';
 import Recursos from '../views/Recursos';
@@ -26,6 +26,9 @@ export default function Routes() {
                 </Tabs>
             </AppBar>
             <Switch>
+            <Route exact path="/">
+                 <Redirect to="/colaboradores" />
+            </Route>
                 <Route exact path="/colaboradores" component={Colaboradores}/>
                 <Route exact path="/recursos" component={Recursos}/>
                 <Route exact path="/reservas" component={Reservas}/>
