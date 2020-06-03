@@ -18,7 +18,7 @@ export default function Routes() {
 
     return (
         <Router history={history}>
-            <AppBar position="static">
+            <AppBar>
                 <Tabs aria-label="simple tabs example">
                     <Tab component={Link} to={'/colaboradores'} label="Colaboradores" />
                     <Tab component={Link} to={'/recursos'} label="Recursos" />

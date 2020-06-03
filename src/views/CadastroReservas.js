@@ -56,7 +56,7 @@ export default class Recursos extends Component {
     }
     render() {
         return (
-            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{ marginTop: '10px' }}>
+            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{ marginTop: '50px' }}>
                 <Grid item>
                     <Typography variant="h4" >
                         Cadastro de Reservas

@@ -13,7 +13,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { getReservas } from '../services/index'
+import { deleteCadastroReservas, getReservas } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
@@ -38,9 +38,17 @@ export default class Reservas extends Component {
     this.setState({ reservas });
   };
 
+  async handleDelete(reserva) {
+    let result = await deleteCadastroReservas(reserva)
+    if(result) {
+      let reservas = await getReservas()
+      this.setState({ reservas });
+    }
+  }
+
   render() {
     return (
-      <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '10px'}}>
+      <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
         <Grid item xs>
           <Typography variant="h4">
             Reservas
@@ -99,8 +107,7 @@ export default class Reservas extends Component {
               </ExpansionPanelDetails>
               <Divider />
               <ExpansionPanelActions>
-                <Button size="small" onClick={this.resetValues}>Excluir</Button>
-                <Button size="small" onClick={this.resetValues}>Cancelar</Button>
+                <Button size="small" onClick={() => this.handleDelete(reserva)}>Excluir</Button>
               </ExpansionPanelActions>
             </ExpansionPanel>
           ))}

@@ -41,7 +41,7 @@ export default class Recursos extends Component {
           };
 
         return (
-            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '10px'}}>
+            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
                 <Grid item xs={12} >
                     <Typography variant="h4" >
                         Recursos

@@ -50,6 +50,18 @@ export const postCadastroReservas = (reserva) => {
   })
 };
 
+export const deleteCadastroReservas = (reserva) => {
+  return axios.delete('http://localhost:3000/reservas/'+ reserva.id)
+  .then(function (response) {
+    console.log(response)
+    return response
+  })
+  .catch(function (error) {
+    console.log(error);
+    return error
+  })
+};
+
 /** DEMAIS EXEMPLOS CHAMADAS PRA API MOCK
 export const patchIntegrantesDoTime = (aluno, time) => {
   time.integrantes.push(aluno)
