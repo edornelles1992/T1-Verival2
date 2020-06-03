@@ -17,6 +17,7 @@ import { Typography } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { showNotification } from '../components/Notification';
 
 export default class Recursos extends Component {
     constructor(props) {
@@ -27,11 +28,16 @@ export default class Recursos extends Component {
         };
     }
 
-    
+    componentDidMount() {
+       this.carregaRecursos()
+    }
 
-    async componentDidMount() {
+    async carregaRecursos(){
         let recursos = await getRecursos()
-        this.setState({ recursos });
+        if (!!recursos)
+           this.setState({ recursos });
+        else 
+          showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
     }
 
     render() {

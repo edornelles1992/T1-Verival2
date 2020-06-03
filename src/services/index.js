@@ -8,6 +8,7 @@ export const getColaboradores = () => {
   })
   .catch(function (error) {
     console.log(error);
+    return null;
   })
 };
 
@@ -18,6 +19,7 @@ export const getRecursos = () => {
   })
   .catch(function (error) {
     console.log(error);
+    return null;
   })
 };
 
@@ -28,6 +30,7 @@ export const getReservas = () => {
   })
   .catch(function (error) {
     console.log(error);
+    return null;
   })
 };
 

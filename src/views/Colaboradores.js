@@ -20,9 +20,17 @@ export default class Colaboradores extends Component {
             colaboradores: [],
         };
     }
-    async componentDidMount() {
+
+    componentDidMount() {
+        this.carregaColaboradores()
+    }
+
+    async carregaColaboradores(){
         let colaboradores = await getColaboradores()
-        this.setState({ colaboradores });
+        if (!!colaboradores)
+           this.setState({ colaboradores });
+        else 
+          showNotification("Não foi possivel buscar os colaboradores.", "Erro!", "danger")
     }
 
     render() {
