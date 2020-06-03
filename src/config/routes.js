@@ -9,6 +9,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Reservas from "../views/Reservas";
+import CadastroReservas from "../views/CadastroReservas"
+
 
 export default function Routes() {
 
@@ -27,6 +29,7 @@ export default function Routes() {
                 <Route exact path="/colaboradores" component={Colaboradores}/>
                 <Route exact path="/recursos" component={Recursos}/>
                 <Route exact path="/reservas" component={Reservas}/>
+                <Route exact path="/cadastro-reservas" component={CadastroReservas}/>
             </Switch>
         </Router>
     );

@@ -31,6 +31,25 @@ export const getReservas = () => {
   })
 };
 
+export const postCadastroReservas = (reserva) => {
+  return axios.post('http://localhost:3000/reservas', {
+    dataInicio: reserva.dataInicio,
+    dataFim: reserva.dataFim,
+    nome: reserva.nome,
+    idUsuario: reserva.idUsuario,
+    custo: reserva.custo,
+    recurso: reserva.recurso 
+  })
+  .then(function (response) {
+    console.log(response)
+    return response
+  })
+  .catch(function (error) {
+    console.log(error);
+    return error
+  })
+};
+
 /** DEMAIS EXEMPLOS CHAMADAS PRA API MOCK
 export const patchIntegrantesDoTime = (aluno, time) => {
   time.integrantes.push(aluno)

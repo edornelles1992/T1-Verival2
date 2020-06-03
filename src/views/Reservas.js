@@ -16,6 +16,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { getReservas } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { TextField } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 export default class Reservas extends Component {
 
@@ -48,6 +49,8 @@ export default class Reservas extends Component {
         <Grid item xs>
           <Button
             variant="contained"
+            component={Link}
+            to={'/cadastro-reservas'}
             color="primary"
             onClick={this.resetValues}
             style={{ marginBottom: "20px" }}
@@ -57,21 +60,21 @@ export default class Reservas extends Component {
         </Grid>
         <Grid item xs>
           <TextField
-            id="date"
-            label="Data Início"
-            type="date"
+            id="datetime-local"
+            label="Data Inicial"
+            type="datetime-local"
             InputLabelProps={{
               shrink: true,
             }}
             style={{marginRight: "20px"}}
           />
           <TextField
-            id="date"
-            label="Data Fim"
-            type="date"
+            id="datetime-local"
+            label="Data Final"
+            type="datetime-local"
             InputLabelProps={{
               shrink: true,
-            }}
+          }}
           />
         </Grid>
         <Grid item xs style={{width: '800px'}}>
