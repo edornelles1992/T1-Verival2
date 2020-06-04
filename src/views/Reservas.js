@@ -25,12 +25,7 @@ export default class Reservas extends Component {
     super(props);
     this.state = {
       reservas: [],
-      selectedTeamIndex: 0,
-      workingSoftware: "0",
-      process: "0",
-      pitch: "0",
-      innovation: "0",
-      teamFormation: "0",
+      selectedReservaIndex: 0,
     };
   }
 
@@ -95,7 +90,7 @@ export default class Reservas extends Component {
         </Grid>
         <Grid item xs style={{width: '800px'}}>
           {this.state.reservas.map((reserva, index) => (
-            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
+            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedReservaIndex: index })}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + index + "c-content"}
