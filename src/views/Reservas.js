@@ -19,23 +19,20 @@ import { TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 
 export default class Reservas extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       reservas: [],
-      selectedTeamIndex: 0,
-      workingSoftware: "0",
-      process: "0",
-      pitch: "0",
-      innovation: "0",
-      teamFormation: "0",
+      selectedReservaIndex: 0,
+      dataInicialSelecionada: undefined,
+      dataFinalSelecionada: undefined,
+      reservasFiltradas: []
     };
   }
 
   componentDidMount = async () => {
     let reservas = await getReservas()
-    this.setState({ reservas });
+    this.setState({ reservas, reservasFiltradas: reservas });
   };
 
   async handleDelete(reserva) {
@@ -43,6 +40,31 @@ export default class Reservas extends Component {
     if(result) {
       let reservas = await getReservas()
       this.setState({ reservas });
+      this.filtrarReservas()
+    }
+  }
+
+  handleChangeDataInicial(e) {
+    const value = (e.target.value).toString();
+    this.setState({dataInicialSelecionada: value})
+  }
+
+  handleChangeDataFinal(e) {
+      const value = (e.target.value).toString();
+      this.setState({dataFinalSelecionada: value})
+  }
+
+  filtrarReservas = () => {
+    if(this.state.dataInicialSelecionada === undefined || this.state.dataFinalSelecionada === undefined){
+      this.setState({reservasFiltradas: this.state.reservas}) 
+      return
+    }
+    else {
+      let newArray = this.state.reservas.filter(res => 
+        res.dataInicio >= this.state.dataInicialSelecionada && 
+        res.dataFim <= this.state.dataFinalSelecionada 
+      )
+      this.setState({reservasFiltradas: newArray}) 
     }
   }
 
@@ -60,7 +82,6 @@ export default class Reservas extends Component {
             component={Link}
             to={'/cadastro-reservas'}
             color="primary"
-            onClick={this.resetValues}
             style={{ marginBottom: "20px" }}
           >
             Inserir Reserva
@@ -75,6 +96,7 @@ export default class Reservas extends Component {
               shrink: true,
             }}
             style={{marginRight: "20px"}}
+            onChange={(e) => this.handleChangeDataInicial(e)}
           />
           <TextField
             id="datetime-local"
@@ -82,18 +104,27 @@ export default class Reservas extends Component {
             type="datetime-local"
             InputLabelProps={{
               shrink: true,
-          }}
+            }}
+            onChange={(e) => this.handleChangeDataFinal(e)}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginLeft: "20px", marginTop: "10px" }}
+            onClick={() => this.filtrarReservas()}
+          >
+            Buscar
+          </Button>
         </Grid>
         <Grid item xs style={{width: '800px'}}>
-          {this.state.reservas.map((reserva, index) => (
+          {this.state.reservasFiltradas.map((reserva, index) => (
             <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + index + "c-content"}
                 id={"panel" + index + "c-header"}
               >
-                <Typography variant="h6">{"Reserva nº " + reserva.id}</Typography>
+                <Typography variant="h6">{index + 1 + " - Reserva de " + reserva.nome}</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Grid item xs={12}>
