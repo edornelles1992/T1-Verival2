@@ -27,7 +27,8 @@ export default class Reservas extends Component {
       selectedReservaIndex: 0,
       dataInicialSelecionada: undefined,
       dataFinalSelecionada: undefined,
-      reservasFiltradas: []
+      reservasFiltradas: [],
+      loading: true
     };
   }
 
@@ -36,9 +37,10 @@ export default class Reservas extends Component {
   };
 
   async carregaReservas(){
+    this.setState({ loading: true })
     let reservas = await getReservas()
     if (!!reservas)
-       this.setState({ reservas, reservasFiltradas: reservas });
+       this.setState({ reservas, reservasFiltradas: reservas, loading: false });
     else 
       showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
 }
@@ -84,6 +86,7 @@ export default class Reservas extends Component {
   }
 
   render() {
+    const { reservasFiltradas, loading } = this.state
     return (
       <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
         <Grid item xs>
@@ -142,7 +145,7 @@ export default class Reservas extends Component {
           </Button>
         </Grid>
         <Grid item xs style={{width: '800px'}}>
-          {this.state.reservasFiltradas.map((reserva, index) => (
+          {reservasFiltradas.map((reserva, index) => (
             <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -168,6 +171,10 @@ export default class Reservas extends Component {
             </ExpansionPanel>
           ))}
         </Grid>
+        {(reservasFiltradas.length <= 0 && !loading) &&
+          <Typography variant="h5">
+            Nenhuma reserva foi encontrada.
+          </Typography>}
       </Grid>
     );
   }
