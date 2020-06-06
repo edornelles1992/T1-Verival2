@@ -17,10 +17,7 @@ test('Deve carregar a lista de recursos', async () => {
     expect(recursos).toBeDefined();
 })
 
-describe('AddToOrder component', () => {
 test('xablau', async () => {
     const wrapper = shallow(<Recursos/>);
-    console.log(wrapper)
-    wrapper.carregaReservas()
+    await wrapper.instance().carregaReservas()
 })
-});
