@@ -38,18 +38,26 @@ export default class Reservas extends Component {
   async carregaReservas() {
     this.setState({ loading: true })
     let reservas = await getReservas()
-    if (!!reservas)
+    if (!!reservas) {
       this.setState({ reservas, reservasFiltradas: reservas, loading: false });
-    else
+      return true;
+    }
+    else {
       showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
+      return false;
+    }
   }
 
   async carregaRecursos() {
     let recursos = await getRecursos()
-    if (!!recursos)
+    if (!!recursos) {
       this.setState({ valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
-    else
+      return true;
+    }
+    else {
       showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+      return false;
+    }
   }
 
   async handleDelete(reserva) {
@@ -158,7 +166,7 @@ export default class Reservas extends Component {
         </Grid>
         <Grid item xs style={{ width: '800px' }}>
           {reservasFiltradas.map((reserva, index) => (
-            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
+            <ExpansionPanel key={index} TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + index + "c-content"}
