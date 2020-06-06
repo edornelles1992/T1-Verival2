@@ -20,3 +20,8 @@ test('Deve carregar os colaboradores apartir da tela de colaboradores', async ()
     const wrapper = shallow(<Colaboradores/>);
     expect(await wrapper.instance().carregaColaboradores()).toBe(true)
 })
+
+test('Deve carregar as reservas apartir da tela de colaboradores', async () => {
+    const wrapper = shallow(<Colaboradores/>);
+    expect(await wrapper.instance().carregaReservas()).toBe(true)
+})

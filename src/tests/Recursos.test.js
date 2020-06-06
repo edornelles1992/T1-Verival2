@@ -20,3 +20,8 @@ test('Deve carregar os recursos apartir da tela de recursos', async () => {
     const wrapper = shallow(<Recursos/>);
     expect(await wrapper.instance().carregaRecursos()).toBe(true)
 })
+
+test('Deve carregar as reservas apartir da tela de recursos', async () => {
+    const wrapper = shallow(<Recursos/>);
+    expect(await wrapper.instance().carregaReservas()).toBe(true)
+})
