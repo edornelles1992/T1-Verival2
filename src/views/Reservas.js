@@ -17,6 +17,7 @@ import { deleteCadastroReservas, getReservas } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
+import { showNotification } from '../components/Notification';
 
 export default class Reservas extends Component {
   constructor(props) {
@@ -31,9 +32,16 @@ export default class Reservas extends Component {
   }
 
   componentDidMount = async () => {
-    let reservas = await getReservas()
-    this.setState({ reservas, reservasFiltradas: reservas });
+    await this.carregaReservas();
   };
+
+  async carregaReservas(){
+    let reservas = await getReservas()
+    if (!!reservas)
+       this.setState({ reservas, reservasFiltradas: reservas });
+    else 
+      showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
+}
 
   async handleDelete(reserva) {
     let result = await deleteCadastroReservas(reserva)

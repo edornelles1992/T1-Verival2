@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {getColaboradores} from '../services/index'
+import {getColaboradores} from '../services/index';
+import { showNotification } from '../components/Notification';
 
 export default class Colaboradores extends Component {
     constructor(props) {
@@ -19,9 +20,17 @@ export default class Colaboradores extends Component {
             colaboradores: [],
         };
     }
-    async componentDidMount() {
+
+    componentDidMount() {
+        this.carregaColaboradores()
+    }
+
+    async carregaColaboradores(){
         let colaboradores = await getColaboradores()
-        this.setState({ colaboradores });
+        if (!!colaboradores)
+           this.setState({ colaboradores });
+        else 
+          showNotification("Não foi possivel buscar os colaboradores.", "Erro!", "danger")
     }
 
     render() {
