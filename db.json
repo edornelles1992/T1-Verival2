@@ -32,32 +32,29 @@
     }
   ],
   "recursos": {
-    "custoEspacoPadrao": 100,
-    "custoAdicionalAssento": 5,
+    "valorM2": 6,
+    "custoAdicionalAssento": 2,
     "itens": [
       {
         "id": "1",
         "nome": "Sala 201",
         "tipo": "espaço",
         "tamanho": 25,
-        "assentos": 40,
-        "custo": 200
+        "assentos": 40
       },
       {
         "id": "2",
         "nome": "Sala 202",
         "tipo": "espaço",
         "tamanho": 30,
-        "assentos": 45,
-        "custo": 250
+        "assentos": 45
       },
       {
         "id": "3",
         "nome": "Auditório 32",
         "tipo": "espaço",
         "tamanho": 90,
-        "assentos": 120,
-        "custo": 800
+        "assentos": 120
       },
       {
         "id": "4",
@@ -197,6 +194,21 @@
         "custo": 10
       },
       "id": "rvPibvo"
+    },
+    {
+      "dataInicio": "2020-06-06",
+      "dataFim": "2020-06-07",
+      "nome": "Denis Manoel",
+      "idUsuario": "1",
+      "custo": 780,
+      "recurso": {
+        "id": "3",
+        "nome": "Auditório 32",
+        "tipo": "espaço",
+        "tamanho": 90,
+        "assentos": 120
+      },
+      "id": "eEiECYM"
     }
   ]
 }

@@ -7,6 +7,8 @@ import { getRecursos, getColaboradores, postCadastroReservas, getReservas } from
 import { Typography, MenuItem, Select, TextField } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import { showNotification } from '../components/Notification';
+import toMoneyConversion from '../utils/NumberUtility';
+import { calcularCusto } from '../utils/CustoUtility';
 
 export default class CadastroReservas extends Component {
     constructor(props) {
@@ -14,6 +16,8 @@ export default class CadastroReservas extends Component {
         this.state = {
             recursos: undefined,
             colaboradores: [],
+            valorM2: undefined,
+            custoAdicionalAssento: undefined,
             reserva:
             {
                 dataInicio: "",
@@ -21,13 +25,13 @@ export default class CadastroReservas extends Component {
                 nome: "",
                 idUsuario: undefined,
                 custo: undefined,
-                recurso: {}
+                recurso: {},
             },
         };
     }
     async componentDidMount() {
         let recursos = await getRecursos()
-        this.setState({ recursos });
+        this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
 
         let colaboradores = await getColaboradores()
         this.setState({ colaboradores });
@@ -38,7 +42,8 @@ export default class CadastroReservas extends Component {
     }
 
     handleClickRecurso(rec) {
-        this.setState(prevState => ({ reserva: { ...prevState.reserva, recurso: rec, custo: rec.custo } }))
+        const custo = calcularCusto(rec.tipo, rec.custo, this.state.valorM2, rec.tamanho, rec.assentos, this.state.custoAdicionalAssento)
+        this.setState(prevState => ({ reserva: { ...prevState.reserva, recurso: rec, custo: custo } }))
     }
 
     handleChangeDataInicial(e) {
@@ -50,33 +55,33 @@ export default class CadastroReservas extends Component {
         const value = (e.target.value).toString();
         this.setState(prevState => ({ reserva: { ...prevState.reserva, dataFim: value } }))
     }
-
+    
     validarReserva() {
-        if(!this.state.reserva.nome) {
+        if (!this.state.reserva.nome) {
             showNotification("É necessário selecionar um colaborador", "Erro!", "danger")
             return false
         }
-        if(!this.state.reserva.custo) {
+        if (!this.state.reserva.custo) {
             showNotification("É necessário selecionar um recurso", "Erro!", "danger")
             return false
         }
-        if(this.state.reserva.dataFim < this.state.reserva.dataInicio) {
+        if (this.state.reserva.dataFim < this.state.reserva.dataInicio) {
             showNotification("Data Final não pode ser menor que inicial", "Erro!", "danger")
             return false
         }
-        if(!this.state.reserva.dataFim || !this.state.reserva.dataInicio) {
+        if (!this.state.reserva.dataFim || !this.state.reserva.dataInicio) {
             showNotification("Selecione um período de reserva", "Erro!", "danger")
             return false
         }
-        if(this.state.reserva.recurso.tipo === 'mobilia') {
+        if (this.state.reserva.recurso.tipo === 'mobilia') {
             let tempoMinimo = new Date(this.state.reserva.dataInicio);
             tempoMinimo.setDate(tempoMinimo.getDate() + 3);
-            if(new Date(this.state.reserva.dataFim) <= tempoMinimo) {
+            if (new Date(this.state.reserva.dataFim) <= tempoMinimo) {
                 showNotification("Mobília tem um período mínimo de reserva de 4 dias", "Erro!", "danger")
                 return false
             }
         }
-        if(this.state.reserva.dataInicio === this.state.reserva.dataFim) {
+        if (this.state.reserva.dataInicio === this.state.reserva.dataFim) {
             showNotification("Período mínimo para reservas é de 1 dia", "Erro!", "danger")
             return false
         }
@@ -84,16 +89,16 @@ export default class CadastroReservas extends Component {
         return true
     }
     async cadastrarReserva() {
-        if(!this.validarReserva()){
+        if (!this.validarReserva()) {
             return
         }
         //Filtra reservas que possuem conflito de datas
         let todasReservas = await getReservas()
         let newArray = todasReservas.filter(res =>
             ((res.dataInicio >= this.state.reserva.dataInicio &&
-            res.dataFim <= this.state.reserva.dataFim ) ||
-            (res.dataInicio == this.state.reserva.dataFim ||
-            res.dataFim == this.state.reserva.dataInicio)) && 
+                res.dataFim <= this.state.reserva.dataFim) ||
+                (res.dataInicio == this.state.reserva.dataFim ||
+                    res.dataFim == this.state.reserva.dataInicio)) &&
             (res.recurso.id === this.state.reserva.recurso.id)
         )
         if (newArray.length > 0) {
@@ -150,6 +155,10 @@ export default class CadastroReservas extends Component {
                                 <MenuItem onClick={() => this.handleClickRecurso(rec)} value={rec}>{rec.nome}</MenuItem>
                             ))}
                         </Select>
+                        {this.state.reserva.custo &&
+                        <Typography variant="h6"  style={{ marginTop: '30px' }}>
+                            {"Custo Total: R$" + toMoneyConversion(this.state.reserva.custo)}
+                        </Typography>}
                     </div>
                     <TextField
                         id="date"

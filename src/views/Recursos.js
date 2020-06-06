@@ -18,13 +18,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { showNotification } from '../components/Notification';
+import { calcularCusto } from '../utils/CustoUtility';
 
 export default class Recursos extends Component {
     constructor(props) {
         super(props);
         this.state = {
             recursos: undefined,
-            tipo: "todos"
+            tipo: "todos",
+            valorM2: undefined,
+            custoAdicionalAssento: undefined,
         };
     }
 
@@ -35,7 +38,7 @@ export default class Recursos extends Component {
     async carregaRecursos(){
         let recursos = await getRecursos()
         if (!!recursos)
-           this.setState({ recursos });
+           this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
         else 
           showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
     }
@@ -83,14 +86,15 @@ export default class Recursos extends Component {
                                     </TableRow>
                                 </TableHead>
                             <TableBody>
-                                {!!this.state.recursos && this.state.recursos.itens.map(recurso => {
-                                    return this.state.tipo === "todos" || this.state.tipo === recurso.tipo ?
-                                    <TableRow key={recurso.id}>
-                                        <TableCell align="center">{recurso.nome}</TableCell>
-                                        <TableCell align="center">{recurso.tipo}</TableCell>
-                                        <TableCell align="center">{recurso.tamanho}</TableCell>
-                                        <TableCell align="center">{recurso.assentos}</TableCell>
-                                        <TableCell align="center">{"R$ " + toMoneyConversion(recurso.custo)}</TableCell>
+                                {!!this.state.recursos && this.state.recursos.itens.map(rec => {
+                                    return this.state.tipo === "todos" || this.state.tipo === rec.tipo ?
+                                    <TableRow key={rec.id}>
+                                        <TableCell align="center">{rec.nome}</TableCell>
+                                        <TableCell align="center">{rec.tipo}</TableCell>
+                                        <TableCell align="center">{rec.tamanho}</TableCell>
+                                        <TableCell align="center">{rec.assentos}</TableCell>
+                                        <TableCell align="center">{"R$ " + toMoneyConversion(calcularCusto(rec.tipo, rec.custo, 
+                                            this.state.valorM2, rec.tamanho, rec.assentos, this.state.custoAdicionalAssento))}</TableCell>
                                     </TableRow>
                                     :
                                     null
