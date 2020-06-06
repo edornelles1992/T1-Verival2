@@ -97,23 +97,25 @@ export default class Reservas extends Component {
         </Grid>
         <Grid item xs>
           <TextField
-            id="datetime-local"
+            id="date"
             label="Data Inicial"
-            type="datetime-local"
+            type="date"
             InputLabelProps={{
               shrink: true,
             }}
             style={{marginRight: "20px"}}
+            value={this.state.dataInicialSelecionada}
             onChange={(e) => this.handleChangeDataInicial(e)}
           />
           <TextField
-            id="datetime-local"
+            id="date"
             label="Data Final"
-            type="datetime-local"
+            type="date"
             InputLabelProps={{
               shrink: true,
             }}
             onChange={(e) => this.handleChangeDataFinal(e)}
+            value={this.state.dataFinalSelecionada}
           />
           <Button
             variant="contained"
@@ -122,6 +124,14 @@ export default class Reservas extends Component {
             onClick={() => this.filtrarReservas()}
           >
             Buscar
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            style={{ marginLeft: "20px", marginTop: "10px" }}
+            onClick={() => this.setState({reservasFiltradas: this.state.reservas, dataInicialSelecionada: 'dd/mm/aaaa', dataFinalSelecionada: 'dd/mm/aaaa'})}
+          >
+            Limpar
           </Button>
         </Grid>
         <Grid item xs style={{width: '800px'}}>
@@ -137,8 +147,8 @@ export default class Reservas extends Component {
               <ExpansionPanelDetails>
                 <Grid item xs={12}>
                   <Typography>{"Responsável: " + reserva.nome}</Typography>
-                  <Typography>{"Data Inicio: " + new Date(reserva.dataInicio).toLocaleDateString() + " " + new Date(reserva.dataInicio).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
-                  <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString() + " " + new Date(reserva.dataFim).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
+                  <Typography>{"Data Inicio: " + new Date(reserva.dataInicio).toLocaleDateString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
+                  <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
                   <Typography>{"Custo: R$ " + toMoneyConversion(reserva.custo)}</Typography>
                   <Typography>{"Recurso: " + reserva.recurso.nome}</Typography>
                   <Typography>{"Tipo: " + reserva.recurso.tipo}</Typography>
