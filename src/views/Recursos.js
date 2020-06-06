@@ -87,8 +87,8 @@ export default class Recursos extends Component {
                                         <TableCell align="center">Tipo</TableCell>
                                         <TableCell align="center">Tamanho (m2)</TableCell>
                                         <TableCell align="center">Assentos</TableCell>
-                                        <TableCell align="center">Custo Unidade</TableCell>
-                                        <TableCell align="center">Custo Total</TableCell>
+                                        <TableCell align="center">Custo Diária</TableCell>
+                                        <TableCell align="center">Custo Total Gerado</TableCell>
                                     </TableRow>
                                 </TableHead>
                             <TableBody>
@@ -101,7 +101,7 @@ export default class Recursos extends Component {
                                         <TableCell align="center">{rec.assentos}</TableCell>
                                         <TableCell align="center">{"R$ " + toMoneyConversion(calcularCusto(rec.tipo, rec.custo, 
                                             this.state.valorM2, rec.tamanho, rec.assentos, this.state.custoAdicionalAssento))}</TableCell>
-                                       <TableCell align="center">{"R$ " + calculaCustoTotalRecurso(rec, this.state.reservas)}</TableCell>
+                                       <TableCell align="center">{"R$ " + toMoneyConversion(calculaCustoTotalRecurso(rec, this.state.reservas))}</TableCell>
                                     </TableRow>
                                     :
                                     null

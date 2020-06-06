@@ -8,7 +8,7 @@ import { Typography, MenuItem, Select, TextField } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import { showNotification } from '../components/Notification';
 import toMoneyConversion from '../utils/NumberUtility';
-import { calcularCusto } from '../utils/CustoUtility';
+import { calcularCusto, calculaCustoTotalDiarias } from '../utils/CustoUtility';
 
 export default class CadastroReservas extends Component {
     constructor(props) {
@@ -29,6 +29,7 @@ export default class CadastroReservas extends Component {
             },
         };
     }
+
     async componentDidMount() {
         let recursos = await getRecursos()
         this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
@@ -55,7 +56,7 @@ export default class CadastroReservas extends Component {
         const value = (e.target.value).toString();
         this.setState(prevState => ({ reserva: { ...prevState.reserva, dataFim: value } }))
     }
-    
+
     validarReserva() {
         if (!this.state.reserva.nome) {
             showNotification("É necessário selecionar um colaborador", "Erro!", "danger")
@@ -88,6 +89,7 @@ export default class CadastroReservas extends Component {
 
         return true
     }
+
     async cadastrarReserva() {
         if (!this.validarReserva()) {
             return
@@ -104,6 +106,7 @@ export default class CadastroReservas extends Component {
         if (newArray.length > 0) {
             showNotification("Conflito de horário para reserva deste recurso", "Erro!", "danger")
         } else {
+            this.state.reserva.custo = calculaCustoTotalDiarias(this.state.reserva)
             await postCadastroReservas(this.state.reserva)
             this.props.history.push("/reservas")
             showNotification("Reserva cadastrada com sucesso", "Sucesso!", "success")
@@ -156,9 +159,14 @@ export default class CadastroReservas extends Component {
                             ))}
                         </Select>
                         {this.state.reserva.custo &&
+                        <>
                         <Typography variant="h6"  style={{ marginTop: '30px' }}>
-                            {"Custo Total: R$" + toMoneyConversion(this.state.reserva.custo)}
-                        </Typography>}
+                            {"Custo Diário: R$" + toMoneyConversion(this.state.reserva.custo)}
+                        </Typography>
+                        <Typography variant="h6"  style={{ marginTop: '10px' }}>
+                            {"Custo Total: R$" + toMoneyConversion(calculaCustoTotalDiarias(this.state.reserva))}
+                        </Typography>
+                        </>}
                     </div>
                     <TextField
                         id="date"

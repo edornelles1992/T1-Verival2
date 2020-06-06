@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import { getColaboradores, getReservas } from '../services/index';
 import { showNotification } from '../components/Notification';
 import { calculaCustoTotalColaborador } from '../utils/CustoUtility';
+import toMoneyConversion from '../utils/NumberUtility';
 
 export default class Colaboradores extends Component {
     constructor(props) {
@@ -80,7 +81,7 @@ export default class Colaboradores extends Component {
                                         <ListItemText style={{ textAlign: 'left' }} primary={colaborador.nome} />
                                         <ListItemText style={{ textAlign: 'center' }} primary={colaborador.matricula} />
                                         <ListItemText style={{ textAlign: 'right' }} primary={colaborador.email} />
-                                        <ListItemText style={{ textAlign: 'right' }} primary={"R$ " + calculaCustoTotalColaborador(colaborador, this.state.reservas)} />
+                                        <ListItemText style={{ textAlign: 'right' }} primary={"R$ " + toMoneyConversion(calculaCustoTotalColaborador(colaborador, this.state.reservas))} />
                                     </ListItem>
                                 );
                             })}

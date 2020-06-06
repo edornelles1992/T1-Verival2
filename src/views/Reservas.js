@@ -8,11 +8,6 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import { deleteCadastroReservas, getReservas } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { TextField } from '@material-ui/core';
@@ -159,9 +154,10 @@ export default class Reservas extends Component {
                   <Typography>{"Responsável: " + reserva.nome}</Typography>
                   <Typography>{"Data Inicio: " + new Date(reserva.dataInicio).toLocaleDateString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
                   <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
-                  <Typography>{"Custo: R$ " + toMoneyConversion(reserva.custo)}</Typography>
                   <Typography>{"Recurso: " + reserva.recurso.nome}</Typography>
                   <Typography>{"Tipo: " + reserva.recurso.tipo}</Typography>
+                  <Typography>{"Custo Total: R$ " + toMoneyConversion(reserva.custo)}</Typography>
+                  <Typography>{"Custo Diário: R$ " + toMoneyConversion(reserva.recurso.custo)}</Typography>
                 </Grid>
               </ExpansionPanelDetails>
               <Divider />
