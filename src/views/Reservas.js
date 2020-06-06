@@ -149,7 +149,7 @@ export default class Reservas extends Component {
                 aria-controls={"panel" + index + "c-content"}
                 id={"panel" + index + "c-header"}
               >
-                <Typography variant="h6">{index + 1 + " - Reserva de " + reserva.nome}</Typography>
+                <Typography variant="h6">{index + 1 + " - Reserva de " + reserva.nome + " - " + reserva.recurso.nome}</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Grid item xs={12}>
