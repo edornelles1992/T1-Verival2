@@ -44,6 +44,13 @@ export default class Reservas extends Component {
 }
 
   async handleDelete(reserva) {
+    let dataInicio = new Date(reserva.dataInicio)
+    let dataFim = new Date(reserva.dataFim)
+    let dataHoje = new Date()
+    if(( dataFim <= dataHoje) || ((dataFim >= dataHoje) && (dataInicio <= dataHoje))) {
+      showNotification("Não é possível excluir reservas passadas ou em andamento", "Erro!", "danger")
+      return
+    }
     let result = await deleteCadastroReservas(reserva)
     if(result) {
       let reservas = await getReservas()

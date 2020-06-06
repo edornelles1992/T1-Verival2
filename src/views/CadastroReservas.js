@@ -68,12 +68,26 @@ export default class CadastroReservas extends Component {
             showNotification("Selecione um período de reserva", "Erro!", "danger")
             return false
         }
+        if(this.state.reserva.recurso.tipo === 'mobilia') {
+            let tempoMinimo = new Date(this.state.reserva.dataInicio);
+            tempoMinimo.setDate(tempoMinimo.getDate() + 3);
+            if(new Date(this.state.reserva.dataFim) <= tempoMinimo) {
+                showNotification("Mobília tem um período mínimo de reserva de 4 dias", "Erro!", "danger")
+                return false
+            }
+        }
+        if(this.state.reserva.dataInicio === this.state.reserva.dataFim) {
+            showNotification("Período mínimo para reservas é de 1 dia", "Erro!", "danger")
+            return false
+        }
+
         return true
     }
     async cadastrarReserva() {
         if(!this.validarReserva()){
             return
         }
+        //Filtra reservas que possuem conflito de datas
         let todasReservas = await getReservas()
         let newArray = todasReservas.filter(res =>
             ((res.dataInicio >= this.state.reserva.dataInicio &&
