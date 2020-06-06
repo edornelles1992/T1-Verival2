@@ -114,7 +114,7 @@ export default class Reservas extends Component {
         </Grid>
         <Grid item xs>
           <TextField
-            id="date"
+            id="dateIni"
             label="Data Inicial"
             type="date"
             InputLabelProps={{
@@ -125,7 +125,7 @@ export default class Reservas extends Component {
             onChange={(e) => this.handleChangeDataInicial(e)}
           />
           <TextField
-            id="date"
+            id="dateEnd"
             label="Data Final"
             type="date"
             InputLabelProps={{
