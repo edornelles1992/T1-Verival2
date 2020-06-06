@@ -81,7 +81,11 @@ export default class Reservas extends Component {
   filtrarReservas = () => {
     if (this.state.dataInicialSelecionada === undefined || this.state.dataFinalSelecionada === undefined) {
       this.setState({ reservasFiltradas: this.state.reservas })
-      return
+      return false
+    }
+    if (this.state.dataFinalSelecionada < this.state.dataInicialSelecionada){
+      showNotification("Data final menor que Data inicial.", "Erro!", "danger")
+      return false
     }
     else {
       let newArray = this.state.reservas.filter(res =>
@@ -89,6 +93,7 @@ export default class Reservas extends Component {
         res.dataFim <= this.state.dataFinalSelecionada
       )
       this.setState({ reservasFiltradas: newArray })
+      return true;
     }
   }
 

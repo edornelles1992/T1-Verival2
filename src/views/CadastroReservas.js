@@ -130,10 +130,10 @@ export default class CadastroReservas extends Component {
                 </Grid>
                 <Grid item style={{ width: '800px', justifyContent: "space-between", display: "flex" }}>
                     <div>
-                        <InputLabel id="demo-simple-select-outlined-label">Colaborador</InputLabel>
+                        <InputLabel id="input-colab">Colaborador</InputLabel>
                         <Select
-                            labelId="demo-simple-select-filled-label"
-                            id="demo-simple-select-filled"
+                            labelId="input-colab-label"
+                            id="input-colab-select-filled"
                             style={{ width: "300px" }}
                         >
                             {this.state.colaboradores.map((colab) => {
@@ -144,7 +144,7 @@ export default class CadastroReservas extends Component {
                         </Select>
                     </div>
                     <TextField
-                        id="date"
+                        id="dateIni"
                         label="Data inicial da reserva"
                         type="date"
                         InputLabelProps={{
@@ -155,10 +155,10 @@ export default class CadastroReservas extends Component {
                 </Grid>
                 <Grid item style={{ width: '800px', justifyContent: "space-between", display: "flex" }}>
                     <div>
-                        <InputLabel id="demo-simple-select-outlined-label">Recurso</InputLabel>
+                        <InputLabel id="input-recurso">Recurso</InputLabel>
                         <Select
-                            labelId="demo-simple-select-filled-label"
-                            id="demo-simple-select-filled"
+                            labelId="select-recurso-label"
+                            id="select-recurso"
                             style={{ width: "300px" }}
                         >
                             {!!this.state.recursos && this.state.recursos.itens.map((rec) => (
@@ -176,7 +176,7 @@ export default class CadastroReservas extends Component {
                         </>}
                     </div>
                     <TextField
-                        id="date"
+                        id="dateFim"
                         label="Data final da reserva"
                         type="date"
                         InputLabelProps={{

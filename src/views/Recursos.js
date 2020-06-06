@@ -65,8 +65,8 @@ export default class Recursos extends Component {
 
                 <Grid item xs={12}>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="select-recurso-label"
+                        id="select-recurso"
                         value={this.state.tipo}
                         onChange={handleChange}
                         style={{width: '250px'}}
