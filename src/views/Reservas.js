@@ -8,11 +8,12 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import { deleteCadastroReservas, getReservas } from '../services/index'
+import { deleteCadastroReservas, getReservas, getRecursos } from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { TextField } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import { showNotification } from '../components/Notification';
+import { calcularCusto } from '../utils/CustoUtility';
 
 export default class Reservas extends Component {
   constructor(props) {
@@ -23,33 +24,44 @@ export default class Reservas extends Component {
       dataInicialSelecionada: undefined,
       dataFinalSelecionada: undefined,
       reservasFiltradas: [],
+      valorM2: undefined,
+      custoAdicionalAssento: undefined,
       loading: true
     };
   }
 
   componentDidMount = async () => {
+    await this.carregaRecursos()
     await this.carregaReservas();
   };
 
-  async carregaReservas(){
+  async carregaReservas() {
     this.setState({ loading: true })
     let reservas = await getReservas()
     if (!!reservas)
-       this.setState({ reservas, reservasFiltradas: reservas, loading: false });
-    else 
+      this.setState({ reservas, reservasFiltradas: reservas, loading: false });
+    else
       showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
-}
+  }
+
+  async carregaRecursos() {
+    let recursos = await getRecursos()
+    if (!!recursos)
+      this.setState({ valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
+    else
+      showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+  }
 
   async handleDelete(reserva) {
     let dataInicio = new Date(reserva.dataInicio)
     let dataFim = new Date(reserva.dataFim)
     let dataHoje = new Date()
-    if(( dataFim <= dataHoje) || ((dataFim >= dataHoje) && (dataInicio <= dataHoje))) {
+    if ((dataFim <= dataHoje) || ((dataFim >= dataHoje) && (dataInicio <= dataHoje))) {
       showNotification("Não é possível excluir reservas passadas ou em andamento", "Erro!", "danger")
       return
     }
     let result = await deleteCadastroReservas(reserva)
-    if(result) {
+    if (result) {
       let reservas = await getReservas()
       this.setState({ reservas });
       this.filtrarReservas()
@@ -58,32 +70,32 @@ export default class Reservas extends Component {
 
   handleChangeDataInicial(e) {
     const value = (e.target.value).toString();
-    this.setState({dataInicialSelecionada: value})
+    this.setState({ dataInicialSelecionada: value })
   }
 
   handleChangeDataFinal(e) {
-      const value = (e.target.value).toString();
-      this.setState({dataFinalSelecionada: value})
+    const value = (e.target.value).toString();
+    this.setState({ dataFinalSelecionada: value })
   }
 
   filtrarReservas = () => {
-    if(this.state.dataInicialSelecionada === undefined || this.state.dataFinalSelecionada === undefined){
-      this.setState({reservasFiltradas: this.state.reservas}) 
+    if (this.state.dataInicialSelecionada === undefined || this.state.dataFinalSelecionada === undefined) {
+      this.setState({ reservasFiltradas: this.state.reservas })
       return
     }
     else {
-      let newArray = this.state.reservas.filter(res => 
-        res.dataInicio >= this.state.dataInicialSelecionada && 
-        res.dataFim <= this.state.dataFinalSelecionada 
+      let newArray = this.state.reservas.filter(res =>
+        res.dataInicio >= this.state.dataInicialSelecionada &&
+        res.dataFim <= this.state.dataFinalSelecionada
       )
-      this.setState({reservasFiltradas: newArray}) 
+      this.setState({ reservasFiltradas: newArray })
     }
   }
 
   render() {
     const { reservasFiltradas, loading } = this.state
     return (
-      <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
+      <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{ marginTop: '50px' }}>
         <Grid item xs>
           <Typography variant="h4">
             Reservas
@@ -108,7 +120,7 @@ export default class Reservas extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            style={{marginRight: "20px"}}
+            style={{ marginRight: "20px" }}
             value={this.state.dataInicialSelecionada}
             onChange={(e) => this.handleChangeDataInicial(e)}
           />
@@ -134,12 +146,12 @@ export default class Reservas extends Component {
             variant="outlined"
             color="primary"
             style={{ marginLeft: "20px", marginTop: "10px" }}
-            onClick={() => this.setState({reservasFiltradas: this.state.reservas, dataInicialSelecionada: 'dd/mm/aaaa', dataFinalSelecionada: 'dd/mm/aaaa'})}
+            onClick={() => this.setState({ reservasFiltradas: this.state.reservas, dataInicialSelecionada: 'dd/mm/aaaa', dataFinalSelecionada: 'dd/mm/aaaa' })}
           >
             Limpar
           </Button>
         </Grid>
-        <Grid item xs style={{width: '800px'}}>
+        <Grid item xs style={{ width: '800px' }}>
           {reservasFiltradas.map((reserva, index) => (
             <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
               <ExpansionPanelSummary
@@ -156,8 +168,9 @@ export default class Reservas extends Component {
                   <Typography>{"Data Fim: " + new Date(reserva.dataFim).toLocaleDateString('pt-BR', { timeZone: 'UTC', hour12: false })}</Typography>
                   <Typography>{"Recurso: " + reserva.recurso.nome}</Typography>
                   <Typography>{"Tipo: " + reserva.recurso.tipo}</Typography>
+                  <Typography>{"Custo Diário: R$ " + toMoneyConversion(calcularCusto(reserva.recurso.tipo, reserva.recurso.custo,
+                    this.state.valorM2, reserva.recurso.tamanho, reserva.recurso.assentos, this.state.custoAdicionalAssento))}</Typography>
                   <Typography>{"Custo Total: R$ " + toMoneyConversion(reserva.custo)}</Typography>
-                  <Typography>{"Custo Diário: R$ " + toMoneyConversion(reserva.recurso.custo)}</Typography>
                 </Grid>
               </ExpansionPanelDetails>
               <Divider />

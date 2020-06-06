@@ -138,69 +138,11 @@
   },
   "reservas": [
     {
-      "id": "1",
-      "dataInicio": "2020-06-03",
-      "dataFim": "2020-06-15",
-      "nome": "Denis Manoel",
-      "idUsuario": "1",
-      "custo": 200,
-      "recurso": {
-        "id": "1",
-        "nome": "Sala 201",
-        "tipo": "espaço",
-        "tamanho": 25,
-        "assentos": 40,
-        "custo": 200
-      }
-    },
-    {
-      "id": "2",
-      "dataInicio": "2020-06-03",
-      "dataFim": "2020-06-15",
-      "nome": "Denis Manoel",
-      "idUsuario": "2",
-      "custo": 10,
-      "recurso": {
-        "id": "4",
-        "nome": "notebook 1",
-        "tipo": "movel",
-        "custo": 10
-      }
-    },
-    {
-      "id": "3",
-      "dataInicio": "2020-06-04",
-      "dataFim": "2020-06-04",
-      "nome": "Denis Manoel",
-      "idUsuario": "3",
-      "custo": 10,
-      "recurso": {
-        "id": "8",
-        "nome": "tablet 1",
-        "tipo": "movel",
-        "custo": 10
-      }
-    },
-    {
-      "dataInicio": "2020-06-25",
-      "dataFim": "2020-06-26",
-      "nome": "João Flores",
-      "idUsuario": "3",
-      "custo": 10,
-      "recurso": {
-        "id": "4",
-        "nome": "notebook 1",
-        "tipo": "movel",
-        "custo": 10
-      },
-      "id": "rvPibvo"
-    },
-    {
       "dataInicio": "2020-06-06",
-      "dataFim": "2020-06-07",
+      "dataFim": "2020-06-08",
       "nome": "Denis Manoel",
       "idUsuario": "1",
-      "custo": 780,
+      "custo": 2340,
       "recurso": {
         "id": "3",
         "nome": "Auditório 32",
@@ -208,77 +150,78 @@
         "tamanho": 90,
         "assentos": 120
       },
-      "id": "eEiECYM"
+      "id": 1
     },
     {
-      "dataInicio": "2020-06-09",
+      "dataInicio": "2020-06-06",
       "dataFim": "2020-06-10",
       "nome": "Paulo Silva",
       "idUsuario": "2",
-      "custo": "15.916.607.815.770,00",
-      "recurso": {
-        "id": "4",
-        "nome": "notebook 1",
-        "tipo": "movel",
-        "custo": 10
-      },
-      "id": "GexDshR"
-    },
-    {
-      "dataInicio": "2020-06-05",
-      "dataFim": "2020-06-10",
-      "nome": "Denis Manoel",
-      "idUsuario": "1",
-      "custo": 40,
-      "recurso": {
-        "id": "10",
-        "nome": "mesa 2",
-        "tipo": "mobilia",
-        "custo": 8
-      },
-      "id": "galHBCt"
-    },
-    {
-      "dataInicio": "2020-06-23",
-      "dataFim": "2020-06-26",
-      "nome": "Maria Almeida",
-      "idUsuario": "4",
-      "custo": null,
-      "recurso": {
-        "id": "8",
-        "nome": "tablet 1",
-        "tipo": "movel",
-        "custo": 10
-      },
-      "id": "IakWCxD"
-    },
-    {
-      "dataInicio": "2020-06-09",
-      "dataFim": "2020-06-14",
-      "nome": "Maria Almeida",
-      "idUsuario": "4",
-      "custo": 25,
-      "recurso": {
-        "id": "12",
-        "nome": "cadeira 2",
-        "tipo": "mobilia",
-        "custo": 5
-      },
-      "id": "CmQ_Y46"
-    },
-    {
-      "dataInicio": "2020-06-04",
-      "dataFim": "2020-06-10",
-      "nome": "Maria Almeida",
-      "idUsuario": "4",
-      "custo": 60,
+      "custo": 50,
       "recurso": {
         "id": "5",
         "nome": "notebook 2",
         "tipo": "movel",
         "custo": 10
       },
-      "id": "-z8cpWA"
+      "id": 2
+    },
+    {
+      "dataInicio": "2020-06-06",
+      "dataFim": "2020-06-08",
+      "nome": "Maria Almeida",
+      "idUsuario": "4",
+      "custo": 30,
+      "recurso": {
+        "id": "8",
+        "nome": "tablet 1",
+        "tipo": "movel",
+        "custo": 10
+      },
+      "id": 3
+    },
+    {
+      "dataInicio": "2020-06-06",
+      "dataFim": "2020-06-10",
+      "nome": "Manoel de Paula",
+      "idUsuario": "5",
+      "custo": 25,
+      "recurso": {
+        "id": "11",
+        "nome": "cadeira 1",
+        "tipo": "mobilia",
+        "custo": 5
+      },
+      "id": 4
+    },
+    {
+      "dataInicio": "2020-06-06",
+      "dataFim": "2020-06-12",
+      "nome": "João Flores",
+      "idUsuario": "3",
+      "custo": 1610,
+      "recurso": {
+        "id": "1",
+        "nome": "Sala 201",
+        "tipo": "espaço",
+        "tamanho": 25,
+        "assentos": 40
+      },
+      "id": 5
+    },
+    {
+      "dataInicio": "2020-06-09",
+      "dataFim": "2020-06-12",
+      "nome": "Denis Manoel",
+      "idUsuario": "1",
+      "custo": 80,
+      "recurso": {
+        "id": "6",
+        "nome": "notebook 3",
+        "tipo": "movel",
+        "custo": 20
+      },
+      "id": 6
     }
   ]
 }

@@ -34,6 +34,6 @@ export const calculaCustoTotalDiarias = (reserva) => {
     if (dias < 1) {
         return reserva.custo
     } else {
-        return reserva.custo * dias
+        return reserva.custo * (dias + 1)
     }
 }

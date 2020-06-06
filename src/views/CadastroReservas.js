@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { showNotification } from '../components/Notification';
 import toMoneyConversion from '../utils/NumberUtility';
 import { calcularCusto, calculaCustoTotalDiarias } from '../utils/CustoUtility';
+import { formatDate } from '../utils/DateUtility';
 
 export default class CadastroReservas extends Component {
     constructor(props) {
@@ -74,6 +75,12 @@ export default class CadastroReservas extends Component {
             showNotification("Selecione um período de reserva", "Erro!", "danger")
             return false
         }
+
+        if (new Date(this.state.reserva.dataInicio) < new Date(formatDate(new Date()))) {
+            showNotification("Data de Inicio menor que data Atual", "Erro!", "danger")
+            return false
+        }
+        
         if (this.state.reserva.recurso.tipo === 'mobilia') {
             let tempoMinimo = new Date(this.state.reserva.dataInicio);
             tempoMinimo.setDate(tempoMinimo.getDate() + 3);
