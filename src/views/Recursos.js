@@ -34,25 +34,33 @@ export default class Recursos extends Component {
 
     async carregaRecursos(){
         let recursos = await getRecursos()
-        if (!!recursos)
-           this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
-        else 
-          showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+        if (!!recursos) {
+            this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
+            return true;
+        }
+        else {
+            showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+            return false;
+        }
     }
 
     async carregaReservas() {
         let reservas = await getReservas()
-        if (!!reservas)
+        if (!!reservas) {
             this.setState({ reservas });
-        else
+            return true;
+        }
+        else {
             showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
+            return false;
+        }
     }
 
-    render() {
+    handleChangeSelect = (event) => {            
+        this.setState({ tipo: event.target.value });
+      };
 
-        const handleChange = (event) => {            
-            this.setState({ tipo: event.target.value });
-          };
+    render() {
 
         return (
             <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
@@ -68,7 +76,7 @@ export default class Recursos extends Component {
                         labelId="select-recurso-label"
                         id="select-recurso"
                         value={this.state.tipo}
-                        onChange={handleChange}
+                        onChange={this.handleChangeSelect}
                         style={{width: '250px'}}
                     >
                         <MenuItem value={"todos"}>Todos</MenuItem>

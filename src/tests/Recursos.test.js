@@ -1,6 +1,5 @@
 import Recursos from '../views/Recursos'
 import { getRecursos } from '../services/index'
-import renderer from 'react-test-renderer';
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
@@ -17,7 +16,7 @@ test('Deve carregar a lista de recursos', async () => {
     expect(recursos).toBeDefined();
 })
 
-test('xablau', async () => {
+test('Deve carregar os recursos apartir da tela de recursos', async () => {
     const wrapper = shallow(<Recursos/>);
-    await wrapper.instance().carregaReservas()
+    expect(await wrapper.instance().carregaRecursos()).toBe(true)
 })

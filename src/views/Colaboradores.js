@@ -29,18 +29,26 @@ export default class Colaboradores extends Component {
 
     async carregaColaboradores() {
         let colaboradores = await getColaboradores()
-        if (!!colaboradores)
+        if (!!colaboradores) {
             this.setState({ colaboradores });
-        else
+            return true;
+        }
+        else {
             showNotification("Não foi possivel buscar os colaboradores.", "Erro!", "danger")
+            return false;
+        }
     }
 
     async carregaReservas() {
         let reservas = await getReservas()
-        if (!!reservas)
+        if (!!reservas) {
             this.setState({ reservas });
-        else
+            return true;
+        }
+        else {
             showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
+            return false;
+        }
     }
 
     render() {
