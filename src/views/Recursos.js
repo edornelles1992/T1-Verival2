@@ -5,20 +5,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Link } from "react-router-dom";
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import {getRecursos} from '../services/index'
+import {getRecursos, getReservas} from '../services/index'
 import toMoneyConversion from '../utils/NumberUtility';
 import { Typography } from '@material-ui/core';
-import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { showNotification } from '../components/Notification';
-import { calcularCusto } from '../utils/CustoUtility';
+import { calcularCusto, calculaCustoTotalRecurso } from '../utils/CustoUtility';
 
 export default class Recursos extends Component {
     constructor(props) {
@@ -28,11 +23,13 @@ export default class Recursos extends Component {
             tipo: "todos",
             valorM2: undefined,
             custoAdicionalAssento: undefined,
+            reservas: []
         };
     }
 
     componentDidMount() {
        this.carregaRecursos()
+       this.carregaReservas();
     }
 
     async carregaRecursos(){
@@ -41,6 +38,14 @@ export default class Recursos extends Component {
            this.setState({ recursos, valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
         else 
           showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+    }
+
+    async carregaReservas() {
+        let reservas = await getReservas()
+        if (!!reservas)
+            this.setState({ reservas });
+        else
+            showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
     }
 
     render() {
@@ -82,7 +87,8 @@ export default class Recursos extends Component {
                                         <TableCell align="center">Tipo</TableCell>
                                         <TableCell align="center">Tamanho (m2)</TableCell>
                                         <TableCell align="center">Assentos</TableCell>
-                                        <TableCell align="center">Custo (R$)</TableCell>
+                                        <TableCell align="center">Custo Unidade</TableCell>
+                                        <TableCell align="center">Custo Total</TableCell>
                                     </TableRow>
                                 </TableHead>
                             <TableBody>
@@ -95,6 +101,7 @@ export default class Recursos extends Component {
                                         <TableCell align="center">{rec.assentos}</TableCell>
                                         <TableCell align="center">{"R$ " + toMoneyConversion(calcularCusto(rec.tipo, rec.custo, 
                                             this.state.valorM2, rec.tamanho, rec.assentos, this.state.custoAdicionalAssento))}</TableCell>
+                                       <TableCell align="center">{"R$ " + calculaCustoTotalRecurso(rec, this.state.reservas)}</TableCell>
                                     </TableRow>
                                     :
                                     null

@@ -1,61 +1,86 @@
 import React, { Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import {getColaboradores} from '../services/index';
+import { getColaboradores, getReservas } from '../services/index';
 import { showNotification } from '../components/Notification';
+import { calculaCustoTotalColaborador } from '../utils/CustoUtility';
 
 export default class Colaboradores extends Component {
     constructor(props) {
         super(props);
         this.state = {
             colaboradores: [],
+            reservas: []
         };
     }
 
     componentDidMount() {
         this.carregaColaboradores()
+        this.carregaReservas();
     }
 
-    async carregaColaboradores(){
+    async carregaColaboradores() {
         let colaboradores = await getColaboradores()
         if (!!colaboradores)
-           this.setState({ colaboradores });
-        else 
-          showNotification("Não foi possivel buscar os colaboradores.", "Erro!", "danger")
+            this.setState({ colaboradores });
+        else
+            showNotification("Não foi possivel buscar os colaboradores.", "Erro!", "danger")
+    }
+
+    async carregaReservas() {
+        let reservas = await getReservas()
+        if (!!reservas)
+            this.setState({ reservas });
+        else
+            showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
     }
 
     render() {
         return (
-            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{marginTop: '50px'}}>
+            <Grid container justify="center" alignItems="center" spacing={6} direction="column" style={{ marginTop: '50px' }}>
                 <Grid item xs={12} >
                     <Typography variant="h4" >
                         Colaboradores
                     </Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Paper>
-                        <List dense style={{width: '500px'}}>
-                            {this.state.colaboradores.map((value) => {
+                <Paper>
+                    <Grid container justify="space-between" alignItems="center"  direction="row">
+                    <Typography variant="h6" style={{ marginLeft: 50}}>
+                            Colaborador
+                    </Typography>
+                        <Typography variant="h6" style={{ marginLeft: 50}}>
+                            Matrícula
+                    </Typography>
+                        <Typography variant="h6" style={{ marginLeft: 50}} >
+                            E-mail
+                    </Typography>
+                        <Typography variant="h6"  style={{ marginRight: 10}}>
+                            Custo Total
+                    </Typography>
+                    </Grid>
+                    
+                        <List dense style={{ width: '800px' }}>
+                            {this.state.colaboradores.map((colaborador) => {
                                 return (
-                                    <ListItem key={value} button>
+                                    <ListItem key={colaborador} button>
                                         <ListItemAvatar>
                                             <Avatar
                                                 alt={'imagem'}
                                                 src={'/static/images/avatar/'}
                                             />
                                         </ListItemAvatar>
-                                        <ListItemText primary={value.nome} />
-                                        <ListItemText primary={value.matricula} />
-                                        <ListItemText primary={value.email} />
+                                        <ListItemText style={{ textAlign: 'left' }} primary={colaborador.nome} />
+                                        <ListItemText style={{ textAlign: 'center' }} primary={colaborador.matricula} />
+                                        <ListItemText style={{ textAlign: 'right' }} primary={colaborador.email} />
+                                        <ListItemText style={{ textAlign: 'right' }} primary={"R$ " + calculaCustoTotalColaborador(colaborador, this.state.reservas)} />
                                     </ListItem>
                                 );
                             })}
@@ -63,7 +88,7 @@ export default class Colaboradores extends Component {
                     </Paper>
                 </Grid>
             </Grid>
-      );
+        );
     }
 
 
