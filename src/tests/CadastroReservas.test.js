@@ -7,7 +7,8 @@ import { reservaDataValida } from './MockObjects'
 import { reservaDataInvalidaMesmoDia, 
          reservaDataInvalidaMobilia, 
          reservaDataConflitoMesmoItem,
-         reservaMesmaDataItemDiferente
+         reservaMesmaDataItemDiferente,
+         reservaMesmaDataItemDiferente1
        } 
 from './MockObjects'
 
@@ -39,21 +40,23 @@ test('Não deve reservar mobilia por menos de 4 dias', () => {
     expect(instance.validarReserva()).toBe(false);
 })
 
-/*
 test('Não deve reservar mesmo item com conflito de datas', async () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
-    instance.state.reserva = reservaDataConflitoMesmoItem
-    await postCadastroReservas(reservaDataConflitoMesmoItem)
+    let reserva = await postCadastroReservas(reservaDataConflitoMesmoItem)
+    instance.state.reserva = reserva
     expect(await instance.cadastrarReserva()).toBe(false);
-    await deleteCadastroReservas(reservaDataConflitoMesmoItem)
+    await deleteCadastroReservas(reserva)
 })
-*/
-/*
+
 test('Deve reservar itens diferentes na mesma data', async () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
-    instance.state.reserva = reservaMesmaDataItemDiferente
-    expect(await instance.cadastrarReserva()).toBe(true);
+    let reserva = await postCadastroReservas(reservaMesmaDataItemDiferente)
+    instance.state.reserva = reservaMesmaDataItemDiferente1
+    let reserva1 = await instance.cadastrarReserva()
+    expect(reserva1).toBeDefined();
+    await deleteCadastroReservas(reserva)
+    await deleteCadastroReservas(reserva1)
 })
-*/
+

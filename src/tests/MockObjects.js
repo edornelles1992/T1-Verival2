@@ -57,6 +57,36 @@ export const reservaDataConflitoMesmoItem = {
         assentos: 120
     },
 }
+
+export const reservaMesmaDataItemDiferente = { 
+    dataInicio: "2040-06-07",
+    dataFim: "2040-06-08",
+    nome: "João",
+    idUsuario: 12,
+    custo: 200,
+    recurso: {
+        id: "8",
+        nome: "tablet 1",
+        tipo: "movel",
+        custo: 10
+    },
+}
+
+export const reservaMesmaDataItemDiferente1 = { 
+    dataInicio: "2040-06-07",
+    dataFim: "2040-06-08",
+    nome: "João",
+    idUsuario: 12,
+    custo: 200,
+    recurso: {
+        id: "3",
+        nome: "Auditório 32",
+        tipo: "espaço",
+        tamanho: 90,
+        assentos: 120
+    },
+}
+
 export const reservaComDataPassada = { 
     dataInicio: "2020-06-01", 
     dataFim: "2020-06-05", 
@@ -87,19 +117,6 @@ export const reservaComDataEmAndamento = {
     },
 }
 
-export const reservaMesmaDataItemDiferente = { 
-    dataInicio: "2020-06-07",
-    dataFim: "2020-06-20",
-    nome: "João",
-    idUsuario: 12,
-    custo: 200,
-    recurso: {
-        id: "8",
-        nome: "tablet 1",
-        tipo: "movel",
-        custo: 10
-    },
-}
 
 export const reservaDataValidaParaExcluir = { 
     dataInicio: "2020-08-10", 

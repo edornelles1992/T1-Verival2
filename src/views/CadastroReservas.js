@@ -115,12 +115,12 @@ export default class CadastroReservas extends Component {
             return false
         } else {
             this.state.reserva.custo = calculaCustoTotalDiarias(this.state.reserva)
-            await postCadastroReservas(this.state.reserva)
+            const reserva = await postCadastroReservas(this.state.reserva)
             if(this.props.history) {
                 this.props.history.push("/reservas")
             }
             showNotification("Reserva cadastrada com sucesso", "Sucesso!", "success")
-            return true
+            return reserva
         }
     }
 
