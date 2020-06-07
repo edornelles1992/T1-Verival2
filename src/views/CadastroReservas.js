@@ -142,7 +142,7 @@ export default class CadastroReservas extends Component {
                         >
                             {this.state.colaboradores.map((colab) => {
                                 return (
-                                    <MenuItem onClick={() => this.handleClickColaborador(colab)} value={colab}>{colab.nome}</MenuItem>
+                                    <MenuItem key={colab} onClick={() => this.handleClickColaborador(colab)} value={colab}>{colab.nome}</MenuItem>
                                 )
                             })}
                         </Select>
@@ -166,7 +166,7 @@ export default class CadastroReservas extends Component {
                             style={{ width: "300px" }}
                         >
                             {!!this.state.recursos && this.state.recursos.itens.map((rec) => (
-                                <MenuItem onClick={() => this.handleClickRecurso(rec)} value={rec}>{rec.nome}</MenuItem>
+                                <MenuItem key={rec} onClick={() => this.handleClickRecurso(rec)} value={rec}>{rec.nome}</MenuItem>
                             ))}
                         </Select>
                         {this.state.reserva.custo &&

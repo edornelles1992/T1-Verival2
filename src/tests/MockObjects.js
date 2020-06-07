@@ -43,11 +43,12 @@ export const reservaDataInvalidaMobilia = {
 }
 
 export const reservaDataConflitoMesmoItem = { 
-    dataInicio: "2020-06-07",
-    dataFim: "2020-06-08",
+    dataInicio: "2030-06-07",
+    dataFim: "2030-06-08",
     nome: "João", 
     idUsuario: 12, 
     custo: 200, 
+    id: "data_conflito",
     recurso: {
         id: "3",
         nome: "Auditório 32",

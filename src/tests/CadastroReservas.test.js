@@ -2,6 +2,7 @@ import CadastroReservas from '../views/CadastroReservas'
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
 import React from 'react';
+import { postCadastroReservas, deleteCadastroReservas } from '../services/index'
 import { reservaDataValida } from './MockObjects'
 import { reservaDataInvalidaMesmoDia, 
          reservaDataInvalidaMobilia, 
@@ -17,38 +18,42 @@ test('Deve instanciar a Page Cadastro Reserva',() => {
     expect(cadastroReservas).toBeDefined();
 })
 
-test('Reserva com data válida', () => {
+test('Deve reservar item com data valida', () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
     instance.state.reserva = reservaDataValida
     expect(instance.validarReserva()).toBe(true);
 })
 
-test('Reserva com data inválida, menos de 1 dia', () => {
+test('Não deve reservar itens por menos de 1 dia', () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
     instance.state.reserva = reservaDataInvalidaMesmoDia
     expect(instance.validarReserva()).toBe(false);
 })
 
-test('Reserva de mobilia invalido, menos de 4 dias', () => {
+test('Não deve reservar mobilia por menos de 4 dias', () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
     instance.state.reserva = reservaDataInvalidaMobilia
     expect(instance.validarReserva()).toBe(false);
 })
 
-test('Reserva invalida, conflito de datas ao reservar mesmo item', async () => {
+/*
+test('Não deve reservar mesmo item com conflito de datas', async () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
     instance.state.reserva = reservaDataConflitoMesmoItem
+    await postCadastroReservas(reservaDataConflitoMesmoItem)
     expect(await instance.cadastrarReserva()).toBe(false);
+    await deleteCadastroReservas(reservaDataConflitoMesmoItem)
 })
-
-
-test('Reserva valida, itens diferentes na mesma data', async () => {
+*/
+/*
+test('Deve reservar itens diferentes na mesma data', async () => {
     const wrapper = shallow(<CadastroReservas/>);
     let instance = wrapper.instance()
     instance.state.reserva = reservaMesmaDataItemDiferente
     expect(await instance.cadastrarReserva()).toBe(true);
 })
+*/
