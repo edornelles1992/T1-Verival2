@@ -86,13 +86,13 @@ test('Deve dar erro ao tentar excluir uma reserva que já passou a data reservad
     const wrapper = shallow(<Reservas/>);
     let instance = wrapper.instance()
     expect(await instance.handleDelete(reservaComDataPassada)).toBeFalsy()
-})
+}, 1000)
 
 test('Deve dar erro ao tentar excluir uma reserva que a data está em andamento.', async () => {
     const wrapper = shallow(<Reservas/>);
     let instance = wrapper.instance()
     expect(await instance.handleDelete(reservaComDataEmAndamento)).toBeFalsy()
-})
+}, 1000)
 
 
 test('Deve excluir uma reserva válida.', async () => {
@@ -100,4 +100,4 @@ test('Deve excluir uma reserva válida.', async () => {
     let instance = wrapper.instance()
     const reserva = await postCadastroReservas(reservaDataValidaParaExcluir)
     expect(await instance.handleDelete(reserva)).toBe(true)
-})
+}, 1000)

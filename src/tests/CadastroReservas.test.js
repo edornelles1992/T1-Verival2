@@ -47,7 +47,7 @@ test('Não deve reservar mesmo item com conflito de datas', async () => {
     instance.state.reserva = reserva
     expect(await instance.cadastrarReserva()).toBe(false);
     await deleteCadastroReservas(reserva)
-})
+}, 1000)
 
 test('Deve reservar itens diferentes na mesma data', async () => {
     const wrapper = shallow(<CadastroReservas/>);
@@ -58,5 +58,5 @@ test('Deve reservar itens diferentes na mesma data', async () => {
     expect(reserva1).toBeDefined();
     await deleteCadastroReservas(reserva)
     await deleteCadastroReservas(reserva1)
-})
+}, 1000)
 
