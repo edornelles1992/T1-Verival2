@@ -38,18 +38,26 @@ export default class Reservas extends Component {
   async carregaReservas() {
     this.setState({ loading: true })
     let reservas = await getReservas()
-    if (!!reservas)
+    if (!!reservas) {
       this.setState({ reservas, reservasFiltradas: reservas, loading: false });
-    else
+      return true;
+    }
+    else {
       showNotification("Não foi possivel buscar as reservas.", "Erro!", "danger")
+      return false;
+    }
   }
 
   async carregaRecursos() {
     let recursos = await getRecursos()
-    if (!!recursos)
+    if (!!recursos) {
       this.setState({ valorM2: recursos.valorM2, custoAdicionalAssento: recursos.custoAdicionalAssento });
-    else
+      return true;
+    }
+    else {
       showNotification("Não foi possivel buscar os recursos.", "Erro!", "danger")
+      return false;
+    }
   }
 
   async handleDelete(reserva) {
@@ -58,24 +66,25 @@ export default class Reservas extends Component {
     let dataHoje = new Date()
     if ((dataFim <= dataHoje) || ((dataFim >= dataHoje) && (dataInicio <= dataHoje))) {
       showNotification("Não é possível excluir reservas passadas ou em andamento", "Erro!", "danger")
-      return
+      return false
     }
     let result = await deleteCadastroReservas(reserva)
     if (result) {
       let reservas = await getReservas()
       this.setState({ reservas });
       this.filtrarReservas()
+      return true;
+    } else {
+      return false;
     }
   }
 
-  handleChangeDataInicial(e) {
-    const value = (e.target.value).toString();
-    this.setState({ dataInicialSelecionada: value })
+  handleChangeDataInicial(value) {
+    this.setState({ dataInicialSelecionada: value.toString() })
   }
 
-  handleChangeDataFinal(e) {
-    const value = (e.target.value).toString();
-    this.setState({ dataFinalSelecionada: value })
+  handleChangeDataFinal(value) {
+    this.setState({ dataFinalSelecionada: value.toString() })
   }
 
   filtrarReservas = () => {
@@ -95,6 +104,10 @@ export default class Reservas extends Component {
       this.setState({ reservasFiltradas: newArray })
       return true;
     }
+  }
+
+  limparCampos(){
+    this.setState({ reservasFiltradas: this.state.reservas, dataInicialSelecionada: 'dd/mm/aaaa', dataFinalSelecionada: 'dd/mm/aaaa' })
   }
 
   render() {
@@ -127,7 +140,7 @@ export default class Reservas extends Component {
             }}
             style={{ marginRight: "20px" }}
             value={this.state.dataInicialSelecionada}
-            onChange={(e) => this.handleChangeDataInicial(e)}
+            onChange={(e) => this.handleChangeDataInicial(e.target.value)}
           />
           <TextField
             id="dateEnd"
@@ -136,7 +149,7 @@ export default class Reservas extends Component {
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(e) => this.handleChangeDataFinal(e)}
+            onChange={(e) => this.handleChangeDataFinal(e.target.value)}
             value={this.state.dataFinalSelecionada}
           />
           <Button
@@ -151,14 +164,14 @@ export default class Reservas extends Component {
             variant="outlined"
             color="primary"
             style={{ marginLeft: "20px", marginTop: "10px" }}
-            onClick={() => this.setState({ reservasFiltradas: this.state.reservas, dataInicialSelecionada: 'dd/mm/aaaa', dataFinalSelecionada: 'dd/mm/aaaa' })}
+            onClick={() => this.limparCampos()}
           >
             Limpar
           </Button>
         </Grid>
         <Grid item xs style={{ width: '800px' }}>
           {reservasFiltradas.map((reserva, index) => (
-            <ExpansionPanel TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
+            <ExpansionPanel key={index} TransitionProps={{ unmountOnExit: true }} onChange={() => this.setState({ selectedTeamIndex: index })}>
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={"panel" + index + "c-content"}

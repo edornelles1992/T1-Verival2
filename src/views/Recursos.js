@@ -56,9 +56,9 @@ export default class Recursos extends Component {
         }
     }
 
-    handleChangeSelect = (event) => {            
-        this.setState({ tipo: event.target.value });
-      };
+    handleChangeSelect = (value) => {            
+        this.setState({ tipo: value });
+    };  
 
     render() {
 
@@ -76,7 +76,7 @@ export default class Recursos extends Component {
                         labelId="select-recurso-label"
                         id="select-recurso"
                         value={this.state.tipo}
-                        onChange={this.handleChangeSelect}
+                        onChange={(event) => this.handleChangeSelect(event.target.value)}
                         style={{width: '250px'}}
                     >
                         <MenuItem value={"todos"}>Todos</MenuItem>
