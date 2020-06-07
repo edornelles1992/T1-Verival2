@@ -41,7 +41,7 @@ export const postCadastroReservas = (reserva) => {
     recurso: reserva.recurso 
   })
   .then(function (response) {
-    return response
+    return response.data
   })
   .catch(function (error) {
     return error
@@ -51,7 +51,7 @@ export const postCadastroReservas = (reserva) => {
 export const deleteCadastroReservas = (reserva) => {
   return axios.delete('http://localhost:3000/reservas/'+ reserva.id)
   .then(function (response) {
-    return response
+    return response.data
   })
   .catch(function (error) {
     return error
