@@ -66,7 +66,7 @@ export default class Reservas extends Component {
     let dataHoje = new Date()
     if ((dataFim <= dataHoje) || ((dataFim >= dataHoje) && (dataInicio <= dataHoje))) {
       showNotification("Não é possível excluir reservas passadas ou em andamento", "Erro!", "danger")
-      return
+      return false
     }
     let result = await deleteCadastroReservas(reserva)
     if (result) {

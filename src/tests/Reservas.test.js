@@ -1,8 +1,9 @@
 import Reservas from '../views/Reservas'
-import { getReservas } from '../services/index'
+import { postCadastroReservas, getReservas } from '../services/index'
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
+import { reservaComDataPassada, reservaComDataEmAndamento } from './MockObjects';
 
 configure({adapter: new Adapter()});
 
@@ -80,3 +81,24 @@ test('Deve recarregar a lista completa de reservas ao limpar os campos', () => {
     instance.limparCampos()
     expect(instance.state.reservasFiltradas).toBe(instance.state.reservas);
 })
+
+test('Deve dar erro ao tentar excluir uma reserva que já passou a data reservada.', async () => {
+    const wrapper = shallow(<Reservas/>);
+    let instance = wrapper.instance()
+    expect(await instance.handleDelete(reservaComDataPassada)).toBeFalsy()
+})
+
+test('Deve dar erro ao tentar excluir uma reserva que a data está em andamento.', async () => {
+    const wrapper = shallow(<Reservas/>);
+    let instance = wrapper.instance()
+    expect(await instance.handleDelete(reservaComDataEmAndamento)).toBeFalsy()
+})
+
+/*
+test('Deve excluir uma reserva válida.', async () => {
+    const wrapper = shallow(<Reservas/>);
+    let instance = wrapper.instance()
+    postCadastroReservas()
+    expect(await instance.handleDelete(reservaDataValidaParaExcluir)).toBeFalsy()
+})
+*/
