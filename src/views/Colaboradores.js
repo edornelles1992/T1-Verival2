@@ -59,8 +59,8 @@ export default class Colaboradores extends Component {
                         Colaboradores
                     </Typography>
                 </Grid>
-                <Grid item xs={6}>
-                <Paper>
+                <Grid item xs={12} >
+                <Paper style={{width: 800}}>
                     <Grid container justify="space-between" alignItems="center"  direction="row">
                     <Typography variant="h6" style={{ marginLeft: 50}}>
                             Colaborador
@@ -76,7 +76,7 @@ export default class Colaboradores extends Component {
                     </Typography>
                     </Grid>
                     
-                        <List dense style={{ width: '800px' }}>
+                        <List dense >
                             {this.state.colaboradores.map((colaborador) => {
                                 return (
                                     <ListItem key={colaborador} button>
