@@ -99,7 +99,7 @@ export default class CadastroReservas extends Component {
 
     async cadastrarReserva() {
         if (!this.validarReserva()) {
-            return
+            return false
         }
         //Filtra reservas que possuem conflito de datas
         let todasReservas = await getReservas()
@@ -112,11 +112,15 @@ export default class CadastroReservas extends Component {
         )
         if (newArray.length > 0) {
             showNotification("Conflito de horário para reserva deste recurso", "Erro!", "danger")
+            return false
         } else {
             this.state.reserva.custo = calculaCustoTotalDiarias(this.state.reserva)
             await postCadastroReservas(this.state.reserva)
-            this.props.history.push("/reservas")
+            if(this.props.history) {
+                this.props.history.push("/reservas")
+            }
             showNotification("Reserva cadastrada com sucesso", "Sucesso!", "success")
+            return true
         }
     }
 
