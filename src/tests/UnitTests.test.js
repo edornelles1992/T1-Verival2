@@ -1,4 +1,4 @@
-const { getColaboradores, getRecursos, getReservas, postCadastroReservas } = require('../services/index');
+const { getColaboradores, getRecursos, getReservas, postCadastroReservas, deleteCadastroReservas } = require('../services/index');
 
 test("Compara o primeiro colaborador do load inicial", async () => {
     const received = await getColaboradores();
@@ -73,4 +73,5 @@ test("Inserção de reserva, compara o recurso adicionado", async () => {
     }
 
     expect(received.recurso).toStrictEqual(expected);
-});
+    await deleteCadastroReservas(received)
+}, 1000);
